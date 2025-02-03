@@ -50,5 +50,31 @@
             echo "<h3>d)</h3>";
             echo "La variable \$a cambia su valor a 'PHP server' y como las variables \$b y \$c son referencias de \$a, toman el mismo valor";
         ?>
+
+        <?php
+            echo "<h2>Inciso 3</h2>";
+
+            $a = "PHP5";
+            echo "Variable \$a: $a <br>";
+            
+            $z[] = &$a;
+            print_r($z);
+            echo "<br>";
+            
+            $b = "5a version de PHP";
+            echo "Variable \$b: $b <br>";
+            
+            $c = $b*10;
+            echo "Variable \$c: $c <br>";
+            
+            $a .= $b;
+            echo "Variable \$a: $a <br>";
+            
+            $b *= $c;
+            echo "Variable \$b: $b <br>";
+            
+            $z[0] = "MySQL";
+            print_r($z);
+        ?>
     </body>
 </html>
