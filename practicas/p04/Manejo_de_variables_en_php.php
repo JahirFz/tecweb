@@ -5,14 +5,14 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title> Titulo de la página </title>
+        <title> Variables php </title>
     </head>
 
     <body>
-        <h2>Manejo de variables en php  </h2>
+        <h1>Manejo de variables en php  </h1>
 
         <?php
-            echo "<h2>Ejercicio 1</h2>";
+            echo "<h2>Inciso 1</h2>";
             echo '$_myvar: es valida, porque comienza con un guion bajo, sigue la nomenclatura de php';
             echo "<br>";
             echo '$_7var: es valida, porque comienza con un guion bajo, sigue la nomenclatura de php';
@@ -26,6 +26,29 @@
             echo '$_element1: es valida, porque comienza con un guion bajo, sigue la nomenclatura de php';
             echo "<br>";
             echo '$house*5: no es valida, porque tiene un signo *, no sigue la nomenclatura de php';
+        ?>
+
+        <?php
+            echo "<h2>Inciso 2</h2>";
+            echo "<h3>a)</h3>";
+            $a = "ManejadorSQL";
+            $b = 'MySQL';
+            $c = &$a;
+            
+            echo "Variable \$a: $a <br>";
+            echo "Variable \$b: $b <br>";
+            echo "Variable \$c: $c";
+            
+            echo "<h3>b) y c)</h3>";
+            $a = "PHP server";
+            $b = &$a;
+            
+            echo "Variable \$a: $a <br>";
+            echo "Variable \$b: $b <br>";
+            echo "Variable \$c: $c";
+            
+            echo "<h3>d)</h3>";
+            echo "La variable \$a cambia su valor a 'PHP server' y como las variables \$b y \$c son referencias de \$a, toman el mismo valor";
         ?>
     </body>
 </html>
