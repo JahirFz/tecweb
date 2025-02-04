@@ -122,5 +122,36 @@
             echo "Variable \$c: $c"; 
         ?>
 
+        <h2>Inciso 6</h2>
+
+        <?php
+            $a = "0";
+            $b = "TRUE";
+            $c = FALSE;
+            $d = ($a OR $b);
+            $e = ($a AND $c);
+            $f = ($a XOR $b);
+            
+            echo "Variable \$a: ", var_dump($a);
+            echo "<br>";
+            echo "Variable \$a: ", var_dump($b);
+            echo "<br>";
+            echo "Variable \$a: ", var_dump($c);
+            echo "<br>";
+            echo "Variable \$a: ", var_dump($d);
+            echo "<br>";
+            echo "Variable \$a: ", var_dump($e);
+            echo "<br>";
+            echo "Variable \$a: ", var_dump($f);
+        ?>
+
+        <h3>Transformación de valor booleano de la variable $c y $e</h3>
+
+        <?php
+            echo "Variable \$c: " . (int)$c;
+            echo "<br>";
+            echo "Variable \$e: " . (int)$e;
+        ?>
+
     </body>
 </html>
