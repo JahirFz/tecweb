@@ -11,8 +11,8 @@
     <body>
         <h1>Manejo de variables en php  </h1>
 
+        <h2>Inciso 1: Determinar cuáles variables son validas y explicar</h2>
         <?php
-            echo "<h2>Inciso 1</h2>";
             echo '$_myvar: es valida, porque comienza con un guion bajo, sigue la nomenclatura de php';
             echo "<br>";
             echo '$_7var: es valida, porque comienza con un guion bajo, sigue la nomenclatura de php';
@@ -28,9 +28,9 @@
             echo '$house*5: no es valida, porque tiene un signo *, no sigue la nomenclatura de php';
         ?>
 
+        <h2>Inciso 2: Proporcionar valores de $a, $b, $c</h2>
+        <h3>a. Mostrar contenido de cada variable</h3>
         <?php
-            echo "<h2>Inciso 2</h2>";
-            echo "<h3>a)</h3>";
             $a = "ManejadorSQL";
             $b = 'MySQL';
             $c = &$a;
@@ -38,23 +38,27 @@
             echo "Variable \$a: $a <br>";
             echo "Variable \$b: $b <br>";
             echo "Variable \$c: $c";
-            
-            echo "<h3>b) y c)</h3>";
+        ?>
+
+        <h3>b. Agregar nuevas asignaciones</h3>
+        <h3>c. Mostrar contenido</h3>
+        <?php
             $a = "PHP server";
             $b = &$a;
             
             echo "Variable \$a: $a <br>";
             echo "Variable \$b: $b <br>";
             echo "Variable \$c: $c";
-            
-            echo "<h3>d)</h3>";
+        ?>
+
+        <h3>d. Describir que ocurrió en el segundo bloque de asignaciones</h3>
+        <?php
             echo "La variable \$a cambia su valor a 'PHP server' y como las variables \$b y \$c son referencias de \$a, toman el mismo valor";
             unset($a, $b, $c)
         ?>
 
+        <h2>Inciso 3: Mostrar contenido de varibles despues de la asignación</h2>
         <?php
-            echo "<h2>Inciso 3</h2>";
-
             $a = "PHP5";
             echo "Variable \$a: $a <br>";
             
@@ -80,10 +84,8 @@
             unset($a, $b, $c, $z)
         ?>
 
-
+        <h2>Inciso 4: Mostrar contenido de varibles despues de la asignación con $GLOBALS</h2>
         <?php
-            echo "<h2>Inciso 4</h2>";
-
             $a = "PHP5";
             echo "Variable \$a:" . $GLOBALS['a'] . "<br>";
                         
@@ -109,8 +111,7 @@
             unset($a, $b, $c, $z)
         ?>
 
-        <h2>Inciso 5</h2>
-
+        <h2>Inciso 5: Dar valor a variables $a, $b, $c</h2>
         <?php
             $a = "7 personas";
             $b = (integer) $a;
@@ -122,8 +123,7 @@
             echo "Variable \$c: $c"; 
         ?>
 
-        <h2>Inciso 6</h2>
-
+        <h2>Inciso 6: Comprobar el valor booleano de las variables $a, $b, $c, $d, $e, $f</h2>
         <?php
             $a = "0";
             $b = "TRUE";
@@ -146,11 +146,28 @@
         ?>
 
         <h3>Transformación de valor booleano de la variable $c y $e</h3>
-
         <?php
             echo "Variable \$c: " . (int)$c;
             echo "<br>";
             echo "Variable \$e: " . (int)$e;
+        ?>
+
+        <h2>Inciso 7: Uso de variable $_SERVER</h2>
+        <h3>a.</h3>
+        <?php
+            echo "Versión de apache: " . $_SERVER['SERVER_SOFTWARE'];
+            echo "<br>";
+            echo "Versión de php: " . phpversion();
+        ?>
+
+        <h3>b.</h3>
+        <?php
+            echo "Nombre del sistema operativo: " . PHP_OS;
+        ?>
+
+        <h3>c.</h3>
+        <?php
+            echo "Idioma de navegador: " . $_SERVER['HTTP_ACCEPT_LANGUAGE'];
         ?>
 
     </body>
