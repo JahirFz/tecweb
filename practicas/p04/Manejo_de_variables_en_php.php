@@ -134,15 +134,15 @@
             
             echo "Variable \$a: ", var_dump($a);
             echo "<br>";
-            echo "Variable \$a: ", var_dump($b);
+            echo "Variable \$b: ", var_dump($b);
             echo "<br>";
-            echo "Variable \$a: ", var_dump($c);
+            echo "Variable \$c: ", var_dump($c);
             echo "<br>";
-            echo "Variable \$a: ", var_dump($d);
+            echo "Variable \$d: ", var_dump($d);
             echo "<br>";
-            echo "Variable \$a: ", var_dump($e);
+            echo "Variable \$e: ", var_dump($e);
             echo "<br>";
-            echo "Variable \$a: ", var_dump($f);
+            echo "Variable \$f: ", var_dump($f);
         ?>
 
         <h3>Transformación de valor booleano de la variable $c y $e</h3>
