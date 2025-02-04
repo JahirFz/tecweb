@@ -49,6 +49,7 @@
             
             echo "<h3>d)</h3>";
             echo "La variable \$a cambia su valor a 'PHP server' y como las variables \$b y \$c son referencias de \$a, toman el mismo valor";
+            unset($a, $b, $c)
         ?>
 
         <?php
@@ -75,6 +76,8 @@
             
             $z[0] = "MySQL";
             print_r($z);
+
+            unset($a, $b, $c, $z)
         ?>
 
 
@@ -102,6 +105,21 @@
                         
             $z[0] = "MySQL";
             print_r($GLOBALS['z']);
+
+            unset($a, $b, $c, $z)
+        ?>
+
+        <h2>Inciso 5</h2>
+
+        <?php
+            $a = "7 personas";
+            $b = (integer) $a;
+            $a = "9e3";
+            $c = (double) $a;
+            
+            echo "Variable \$a: $a <br>";
+            echo "Variable \$b: $b <br>";
+            echo "Variable \$c: $c"; 
         ?>
 
     </body>
