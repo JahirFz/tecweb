@@ -69,13 +69,13 @@
             $b = "5a version de PHP";
             echo "Variable \$b: $b <br>";
             
-            $c = $b*10;
+            @$c = $b*10;
             echo "Variable \$c: $c <br>";
             
             $a .= $b;
             echo "Variable \$a: $a <br>";
             
-            $b *= $c;
+            @$b *= $c;
             echo "Variable \$b: $b <br>";
             
             $z[0] = "MySQL";
@@ -96,13 +96,13 @@
             $b = "5a version de PHP";
             echo "Variable \$b:" . $GLOBALS['b'] . "<br>";
                         
-            $c = $b*10;
+            @$c = $b*10;
             echo "Variable \$c:" . $GLOBALS['c'] . "<br>";
                         
             $a .= $b;
             echo "Variable \$a:" . $GLOBALS['a'] . "<br>";
                         
-            $b *= $c;
+            @$b *= $c;
             echo "Variable \$b:" . $GLOBALS['b'] . "<br>";
                         
             $z[0] = "MySQL";
