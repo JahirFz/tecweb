@@ -16,12 +16,15 @@
         function secuencia() {
             $matriz = [];
             $iteracion = 0;
+            $numgenerado = 0;
     
             while (true) {
                 $f = [
                 rand(1, 999), 
                 rand(1, 999), 
                 rand(1, 999)];
+
+                $numgenerado +=3;
                 $iteracion++;
         
                 if ($f[0] % 2 != 0 && $f[1] % 2 == 0 && $f[2] % 2 != 0) {
@@ -31,7 +34,7 @@
                 $matriz[] = $f;
             }
 
-            return [$matriz, $iteracion];
+            return [$matriz, $iteracion, $numgenerado];
         }
     ?>
 
@@ -55,7 +58,7 @@
     ?>
 
     <?php
-        function arregloAlfabetoAcsii(){
+        function arregloAcsii(){
             $b=[];
             for($i=97; $i <= 122; $i++){
                 $b[$i] = chr($i);

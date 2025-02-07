@@ -17,63 +17,73 @@
             }
         ?>
 
-        <h2></h2>
+        <h2>2. Generación repetitiva de 3 números aleatorios hasta obtener una
+        secuencia</h2>
 
         <?php
             require_once __DIR__ . '/src/funciones.php';
 
-            list($matriz, $iteracion) = secuencia();
+            list($matriz, $iteracion, $numgenerado) = secuencia();
 
-            echo "<table border='0'>";
+            echo "<table>";
             foreach ($matriz as $f) {
-                echo "<tr><td>" . implode("</td><td>", $f) . "</td></tr>";
+                echo "<tr>
+                        <td>" 
+                            . implode("</td><td>", $f) . "
+                        </td>
+                    </tr>";
             }
             echo "</table>";
-            echo "<p>{$iteracion} iteraciones realizadas.</p>";
+            echo "$numgenerado numero generados en $iteracion iteraciones realizadas";
         ?>
 
-    <h2>Con ciclo while</h2>
-    <?php
-        require_once __DIR__ . '/src/funciones.php';
-    if (isset($_GET['multiplo'])) {
-        $multiplo = $_GET['multiplo'];
-        if (is_numeric($multiplo) && $multiplo> 0) {
-            $resultado = multiploAleatorioWhile($multiplo);
-            echo "El primer múltiplo de $multiplo encontrado con while es $resultado";
+        <h2>3. Numero multiplo aleatorio con while y do while</h2>
+        <h3>Con ciclo while</h3>
+        <?php
+            require_once __DIR__ . '/src/funciones.php';
+        if (isset($_GET['multiplo'])) {
+            $multiplo = $_GET['multiplo'];
+            if (is_numeric($multiplo) && $multiplo> 0) {
+                $resultado = multiploAleatorioWhile($multiplo);
+                echo "El primer múltiplo de $multiplo encontrado con while es $resultado";
+            }
         }
-    }
-    ?>
+        ?>
 
-    <h2>Con ciclo do-while</h2>
-    <?php
-        require_once __DIR__ . '/src/funciones.php';
-    if (isset($_GET['multiplo'])) {
-        if (is_numeric($multiplo) && $multiplo > 0) {
-            $resultado = multiploAleatorioDoWhile($multiplo);
-            echo "El primer múltiplo de $multiplo encontrado con do-while es $resultado";
+        <h3>Con ciclo do-while</h3>
+        <?php
+            require_once __DIR__ . '/src/funciones.php';
+        if (isset($_GET['multiplo'])) {
+            if (is_numeric($multiplo) && $multiplo > 0) {
+                $resultado = multiploAleatorioDoWhile($multiplo);
+                echo "El primer múltiplo de $multiplo encontrado con do-while es $resultado";
+            }
         }
-    }
-    ?>
+        ?>
 
-    <h2>4.</h2>
-    <?php
-        $arreglo= arregloAlfabetoAcsii();
-        
-        foreach($arreglo as $key => $value){
-            echo "[$key] => $value <br>";
-        }
-    ?>
+        <h3>4. Arreglo de letras con ACSII</h3>
+        <?php
+            require_once __DIR__ . '/src/funciones.php';
 
-    <h2>5.</h2>
-    <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
-            Edad: <input type="text" name="edad" required><br>
-            Sexo: <input type="text" name="sexo" required><br>
-                    <input type="submit" value="Verificar">
-        </form>
-    <?php
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            echo sexoEdad($_POST['edad'], $_POST['sexo']);
-        }
-    ?>
+            $arreglo= arregloAcsii();
+            
+            foreach($arreglo as $key => $value){
+                echo "[$key] => $value <br>";
+            }
+        ?>
+
+        <h2>5. Identificar sexo y edad</h2>
+        <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
+                Edad: <input type="text" name="edad" required><br>
+                Sexo: <input type="text" name="sexo" required><br>
+                        <input type="submit" value="Verificar">
+            </form>
+        <?php
+            require_once __DIR__ . '/src/funciones.php';
+
+            if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                echo sexoEdad($_POST['edad'], $_POST['sexo']);
+            }
+        ?>
     </body>
 </html>
