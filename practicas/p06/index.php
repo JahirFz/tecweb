@@ -22,7 +22,7 @@
         <?php
             require_once __DIR__ . '/src/funciones.php';
 
-            list($matriz, $iteracion) = generarSecuencia();
+            list($matriz, $iteracion) = secuencia();
 
             echo "<table border='0'>";
             foreach ($matriz as $f) {
@@ -31,5 +31,28 @@
             echo "</table>";
             echo "<p>{$iteracion} iteraciones realizadas.</p>";
         ?>
+
+    <h2>Con ciclo while</h2>
+    <?php
+        require_once __DIR__ . '/src/funciones.php';
+    if (isset($_GET['multiplo'])) {
+        $multiplo = $_GET['multiplo'];
+        if (is_numeric($multiplo) && $multiplo> 0) {
+            $resultado = multiploAleatorioWhile($multiplo);
+            echo "El primer múltiplo de $multiplo encontrado con while es $resultado";
+        }
+    }
+    ?>
+
+    <h2>Con ciclo do-while</h2>
+    <?php
+        require_once __DIR__ . '/src/funciones.php';
+    if (isset($_GET['multiplo'])) {
+        if (is_numeric($multiplo) && $multiplo > 0) {
+            $resultado = multiploAleatorioDoWhile($multiplo);
+            echo "El primer múltiplo de $multiplo encontrado con do-while es $resultado";
+        }
+    }
+    ?>
     </body>
 </html>

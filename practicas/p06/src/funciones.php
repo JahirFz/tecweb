@@ -13,7 +13,7 @@
     ?>
 
     <?php
-        function generarSecuencia() {
+        function secuencia() {
             $matriz = [];
             $iteracion = 0;
     
@@ -32,6 +32,25 @@
             }
 
             return [$matriz, $iteracion];
+        }
+    ?>
+
+    <?php
+        function multiploAleatorioWhile($multiplo){
+            $num = rand(1, 1000);
+            while ($num % $multiplo != 0) {
+                $num = rand(1, 1000);
+            }
+            return $num;
+        }
+    ?>
+
+    <?php
+        function multiploAleatorioDoWhile($multiplo) {
+            do {
+                $num = rand(1, 1000);
+            } while ($num % $multiplo != 0);
+            return $num;
         }
     ?>
 </body>
