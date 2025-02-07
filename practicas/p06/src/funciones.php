@@ -11,5 +11,28 @@
             return ($num%5==0 && $num%7==0);
         }
     ?>
+
+    <?php
+        function generarSecuencia() {
+            $matriz = [];
+            $iteracion = 0;
+    
+            while (true) {
+                $f = [
+                rand(1, 999), 
+                rand(1, 999), 
+                rand(1, 999)];
+                $iteracion++;
+        
+                if ($f[0] % 2 != 0 && $f[1] % 2 == 0 && $f[2] % 2 != 0) {
+                    $matriz[] = $f;
+                    break;
+                }
+                $matriz[] = $f;
+            }
+
+            return [$matriz, $iteracion];
+        }
+    ?>
 </body>
 </html>
