@@ -63,5 +63,17 @@
             echo "[$key] => $value <br>";
         }
     ?>
+
+    <h2>5.</h2>
+    <form action="http://localhost/tecweb/practicas/p06/index.php" method="post">
+            Edad: <input type="text" name="edad" required><br>
+            Sexo: <input type="text" name="sexo" required><br>
+                    <input type="submit" value="Verificar">
+        </form>
+    <?php
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            echo sexoEdad($_POST['edad'], $_POST['sexo']);
+        }
+    ?>
     </body>
 </html>

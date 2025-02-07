@@ -63,5 +63,15 @@
             return $b;
         }
     ?>
+
+    <?php
+        function sexoEdad($edad, $sexo){
+            if($sexo == 'femenino' && $edad >= 18 && $edad <= 35){
+                echo 'Bienvenida, usted esta en el rango de edad permitido';
+            }else{
+                echo 'No cumple con la edad';
+            }
+        }
+    ?>
 </body>
 </html>
