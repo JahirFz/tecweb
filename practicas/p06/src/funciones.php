@@ -53,5 +53,15 @@
             return $num;
         }
     ?>
+
+    <?php
+        function arregloAlfabetoAcsii(){
+            $b=[];
+            for($i=97; $i <= 122; $i++){
+                $b[$i] = chr($i);
+            }
+            return $b;
+        }
+    ?>
 </body>
 </html>

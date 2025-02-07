@@ -54,5 +54,14 @@
         }
     }
     ?>
+
+    <h2>4.</h2>
+    <?php
+        $arreglo= arregloAlfabetoAcsii();
+        
+        foreach($arreglo as $key => $value){
+            echo "[$key] => $value <br>";
+        }
+    ?>
     </body>
 </html>
