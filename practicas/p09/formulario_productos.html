@@ -47,8 +47,8 @@
             var cantidad = document.getElementById('form-cantidad').value;
             var imagenInput = document.getElementById('form-imagen');
 
-            if (nombre === "" || nombre.length >= 100) {
-                alert("Debes ingresar el nombre y que tenga al menos 100 caracteres");
+            if (nombre === "" || nombre.length > 100) {
+                alert("Debes ingresar el nombre y que tenga hasta 100 caracteres");
                 return false;
             }
 
@@ -74,7 +74,6 @@
 
             if (imagenInput.value.trim() === '') {
                 imagenInput.value = 'img/default.png';
-                return false;
             }
             return true;
         }

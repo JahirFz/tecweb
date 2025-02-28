@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de productos</title>
     <style type="text/css">
         ol, ul { 
@@ -11,30 +13,30 @@
 </head>
 <body>
     <h1>Registro de productos</h1>
-    <form id="formularioSuplementos" action="http://localhost/tecweb/practicas/p08/set_producto_v2.php" method="post" onsubmit="return validarFormulario()">
+    <form id="formularioSuplementos" method="post" action="update_producto.php" onsubmit="return validarFormulario()">
         <fieldset>
             <legend>Agrega el producto</legend>
             <ul>
-                <li><label for="form-name">Nombre: </label> <input type="text" name="name" id="form-name" value="<?= !empty($_POST['nombre'])?$_POST['nombre']:$_GET['nombre'] ?>"></li>
+                <li><label for="form-name">Nombre: </label> <input type="text" name="nombre" id="form-name" value="<?= !empty($_POST['nombre'])?$_POST['nombre']:$_GET['nombre'] ?>"></li>
                 <li>
-                    <label for="form-marca">Marca: value="<?= !empty($_POST['marca'])?$_POST['marca']:$_GET['marca'] ?>"</label>
+                    <label for="form-marca">Marca:</label> 
                     <select name="marca" id="form-marca" required>
                         <option value="">Seleccione una marca</option>
-                        <option value="Blife">B life</option>
-                        <option value="Dymatize">Dymatize</option>
-                        <option value="Birdman">Birdman</option>
-                        <option value="Legionpulse">Legionpulse</option>
+                        <option value="Blife" <?= !empty($_POST['marca'])?$_POST['marca']:$_GET['marca'] ?>>B life</option>
+                        <option value="Dymatize" <?= !empty($_POST['marca'])?$_POST['marca']:$_GET['marca'] ?>>Dymatize</option>
+                        <option value="Birdman" <?= !empty($_POST['marca'])?$_POST['marca']:$_GET['marca'] ?>>Birdman</option>
+                        <option value="Legionpulse" <?= !empty($_POST['marca'])?$_POST['marca']:$_GET['marca'] ?>>Legionpulse</option>
                     </select>
                 </li>
                 <li><label for="form-modelo">Modelo: </label> <input type="text" name="modelo" id="form-modelo" value="<?= !empty($_POST['modelo'])?$_POST['modelo']:$_GET['modelo'] ?>"></li>
                 <li><label for="form-precio">Precio: </label> <input type="number" name="precio" id="form-precio" step="0.01" value="<?= !empty($_POST['precio'])?$_POST['precio']:$_GET['precio'] ?>"></li>
-                <li><label for="form-story">Ingresa los detalles del producto: </label><br><textarea name="story" rows="4" cols="60" id="form-story" value="<?= !empty($_POST['detalles'])?$_POST['detalles']:$_GET['detalles'] ?>"></textarea></li>
+                <li><label for="form-story">Ingresa los detalles del producto: </label><br><textarea name="story" rows="4" cols="60" id="form-story" ><?= !empty($_POST['detalles'])?$_POST['detalles']:$_GET['detalles'] ?></textarea></li>
                 <li><label for="form-cantidad">Unidades: </label> <input type="number" name="cantidad" id="form-cantidad" value="<?= !empty($_POST['unidades'])?$_POST['unidades']:$_GET['unidades'] ?>"></li>
                 <li><label for="form-imagen">Imagen:</label> <input type="text" name="imagen" id="form-imagen" placeholder="img/nombre-imagen.png" value="<?= !empty($_POST['imagen'])?$_POST['imagen']:$_GET['imagen'] ?>"></li>
             </ul>
         </fieldset>               
         <p>
-            <input type="submit" value="Agregar productos">
+            <input type="submit" value="Actualizar">
             <input type="reset">
         </p>
     </form>

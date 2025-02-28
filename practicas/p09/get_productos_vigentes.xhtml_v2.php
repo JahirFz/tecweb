@@ -38,6 +38,41 @@
             object-fit: cover;
         }
         </style>
+        <script>
+            function show(event) {
+                var row = event.target.closest("tr");
+
+                var data = row.querySelectorAll(".row-data");
+
+                var nombre = data[0].innerText;
+                var marca = data[1].innerText;
+                var modelo = data[2].innerText;
+                var precio = data[3].innerText;
+                var unidades = data[4].innerText;
+                var detalles = data[5].innerText;
+                var img = data[6].firstChild.getAttribute('src');
+
+                function send2form(nombre, marca, modelo, precio, unidades, detalles, img) {     //form) { 
+                var urlForm = "formulario_productos_v2.php";
+                var propNombre = "nombre="+nombre;
+                var propMarca = "marca="+marca;
+                var propModelo = "modelo="+modelo;
+                var propPrecio = "precio="+precio;
+                var propUnidades = "unidades="+unidades;
+                var propDetalles = "detalles="+detalles;
+                var propImagen = "imagen="+img;
+                window.open(urlForm+"?"+propNombre+"&"+propMarca+"&"+propModelo+"&"+propPrecio+"&"+propPrecio+"&"+propUnidades+"&"+propDetalles+"&"+propImagen);
+            }
+
+            alert("Nombre: " + nombre + "\nMarca: " + marca + "\nModelo: " + modelo + "\nPrecio: " + precio
+                + "\nUnidades: " + unidades + "\nDetalles: " + detalles + "\nImagen: " + img
+            );
+
+            send2form(nombre, marca, modelo, precio, unidades, detalles, img);
+            
+            }
+            
+        </script>
     </head>
     <body>
         <h3>PRODUCTO</h3>
@@ -57,19 +92,21 @@
                         <th scope="col">Unidades</th>
                         <th scope="col">Detalles</th>
                         <th scope="col">Imagen</th>
+                        <th scope="col">Modificacion</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rows as $row) : ?>
                         <tr>
                             <th scope="row"><?= $row['id'] ?></th>
-                            <td><?= $row['nombre'] ?></td>
-                            <td><?= $row['marca'] ?></td>
-                            <td><?= $row['modelo'] ?></td>
-                            <td><?= $row['precio'] ?></td>
-                            <td><?= $row['unidades'] ?></td>
-                            <td><?= utf8_encode($row['detalles']) ?></td>
-                            <td><img src="<?= $row['imagen'] ?>" alt="<?= $row['nombre'] ?>"></td>
+                            <td class="row-data"><?= $row['nombre'] ?></td>
+                            <td class="row-data"><?= $row['marca'] ?></td>
+                            <td class="row-data"><?= $row['modelo'] ?></td>
+                            <td class="row-data"><?= $row['precio'] ?></td>
+                            <td class="row-data"><?= $row['unidades'] ?></td>
+                            <td class="row-data"><?= utf8_encode($row['detalles']) ?></td>
+                            <td class="row-data"><img src="<?= $row['imagen'] ?>" alt="<?= $row['nombre'] ?>"></td>
+                            <td class="row-data"><input type="button" value="submit" onclick="show(event)" ></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
