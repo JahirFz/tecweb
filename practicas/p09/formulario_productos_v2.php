@@ -17,6 +17,7 @@
         <fieldset>
             <legend>Agrega el producto</legend>
             <ul>
+                <input type="hidden" name="id" value="<?= isset($_GET['id']) ? $_GET['id'] : '' ?>">
                 <li><label for="form-name">Nombre: </label> <input type="text" name="nombre" id="form-name" value="<?= !empty($_POST['nombre'])?$_POST['nombre']:$_GET['nombre'] ?>"></li>
                 <li>
                     <label for="form-marca">Marca:</label> 

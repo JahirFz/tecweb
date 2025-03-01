@@ -1,49 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Actualizado</title>
-</head>
-<body>
 <?php
-
 $link = mysqli_connect("localhost", "root", "20septiembrE.", "marketzone");
 
 if ($link === false) {
-    die("ERROR: No pudo conectarse con la base de datos");
+    die("ERROR: No pudo conectarse con la DB. " . mysqli_connect_error());
 }
 
+// Recibir datos del formulario
+$id = $_POST['id'];
+$nombre = mysqli_real_escape_string($link, $_POST['nombre']);
+$modelo = mysqli_real_escape_string($link, $_POST['modelo']);
+$marca = mysqli_real_escape_string($link, $_POST['marca']);
+$precio = mysqli_real_escape_string($link, $_POST['precio']);
+$detalles = mysqli_real_escape_string($link, $_POST['story']);
+$unidades = mysqli_real_escape_string($link, $_POST['cantidad']);
+$imagen = mysqli_real_escape_string($link, $_POST['imagen']);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   
-    $sql = "UPDATE productos SET nombre = ?, modelo = ?, marca = ?, precio = ?, detalles = ?, unidades = ?, imagen = ? WHERE id = ?";
+// Consulta para actualizar el producto
+$sql = "UPDATE productos SET nombre='$nombre', modelo='$modelo', marca='$marca', precio='$precio', detalles='$detalles', unidades='$unidades', imagen='$imagen' WHERE id='$id'";
 
-    if ($stmt = mysqli_prepare($link, $sql)) {
-        mysqli_stmt_bind_param($stmt, "ssssdssi", 
-            $_POST['nombre'], 
-            $_POST['modelo'], 
-            $_POST['marca'], 
-            $_POST['precio'], 
-            $_POST['story'], 
-            $_POST['cantidad'], 
-            $_POST['imagen'], 
-            $_POST['id']
-        );
-
-        if (mysqli_stmt_execute($stmt)) {
-            echo "Registro actualizado.";
-        } else {
-            echo "ERROR: No se pudo ejecutar la consulta. " . mysqli_stmt_error($stmt);
-        }
-
-      
-        mysqli_stmt_close($stmt);
-    } else {
-        echo "ERROR: No se pudo preparar la consulta. " . mysqli_error($link);
-    }
+if (mysqli_query($link, $sql)) {
+    echo "Producto actualizado correctamente.";
+    echo "<br><a href='get_producto_xhtml_v2.php'>Ver productos</a>";
+    echo "<br><a href='get_productos_vigentes_v2.php'>Ver productos vigentes</a>";
+} else {
+    echo "ERROR: No se pudo ejecutar $sql. " . mysqli_error($link);
 }
 
 mysqli_close($link);
 ?>
-</body>
-</html>

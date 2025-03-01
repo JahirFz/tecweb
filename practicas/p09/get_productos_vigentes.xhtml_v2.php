@@ -39,9 +39,12 @@
         }
         </style>
         <script>
-            function show(event) {
+            function show() {
+            // Obtener la fila en la que se hizo clic
                 var row = event.target.closest("tr");
+                var id = row.querySelector("th").innerHTML;
 
+            // Obtener los datos de la fila
                 var data = row.querySelectorAll(".row-data");
 
                 var nombre = data[0].innerText;
@@ -52,8 +55,17 @@
                 var detalles = data[5].innerText;
                 var img = data[6].firstChild.getAttribute('src');
 
-                function send2form(nombre, marca, modelo, precio, unidades, detalles, img) {     //form) { 
+
+            alert("Nombre: " + nombre + "\nMarca: " + marca + "\nModelo: " + modelo + "\nPrecio: " + precio
+                + "\nUnidades: " + unidades + "\nDetalles: " + detalles + "\nImagen: " + img);
+
+                send2form(id, nombre, marca, modelo, precio, unidades, detalles, img);
+
+            }
+            
+            function send2form(id, nombre, marca, modelo, precio, unidades, detalles, img ) {     //form) { 
                 var urlForm = "formulario_productos_v2.php";
+                var propId = "id="+id;
                 var propNombre = "nombre="+nombre;
                 var propMarca = "marca="+marca;
                 var propModelo = "modelo="+modelo;
@@ -61,16 +73,8 @@
                 var propUnidades = "unidades="+unidades;
                 var propDetalles = "detalles="+detalles;
                 var propImagen = "imagen="+img;
-                window.open(urlForm+"?"+propNombre+"&"+propMarca+"&"+propModelo+"&"+propPrecio+"&"+propPrecio+"&"+propUnidades+"&"+propDetalles+"&"+propImagen);
-            }
-
-            alert("Nombre: " + nombre + "\nMarca: " + marca + "\nModelo: " + modelo + "\nPrecio: " + precio
-                + "\nUnidades: " + unidades + "\nDetalles: " + detalles + "\nImagen: " + img
-            );
-
-            send2form(nombre, marca, modelo, precio, unidades, detalles, img);
-            
-            }
+                window.open(urlForm+"?"+propId+"&"+propNombre+"&"+propMarca+"&"+propModelo+"&"+propPrecio+"&"+propUnidades+"&"+propDetalles+"&"+propImagen);
+                }
             
         </script>
     </head>
@@ -106,7 +110,7 @@
                             <td class="row-data"><?= $row['unidades'] ?></td>
                             <td class="row-data"><?= utf8_encode($row['detalles']) ?></td>
                             <td class="row-data"><img src="<?= $row['imagen'] ?>" alt="<?= $row['nombre'] ?>"></td>
-                            <td class="row-data"><input type="button" value="submit" onclick="show(event)" ></td>
+                            <td class="row-data"><input type="button" value="submit" onclick="show()" ></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
