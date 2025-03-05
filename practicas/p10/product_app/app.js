@@ -174,5 +174,5 @@ function buscarProducto(e) {
     };
 
     // Enviar el término de búsqueda como un parámetro POST
-    client.send("search=" + search);a
+    client.send("search=" + search);
 }
