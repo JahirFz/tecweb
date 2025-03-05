@@ -11,6 +11,6 @@
          * LA INSERCIÓN A LA BASE DE DATOS. COMO RESPUESTA REGRESA
          * UN MENSAJE DE ÉXITO O DE ERROR, SEGÚN SEA EL CASO.
          */
-        echo '[SERVIDOR] Nombre: '.$jsonOBJ->nombre;
+        echo '[SERVIDOR] Nombre: '.$jsonOBJ->nombre;a
     } 
 ?>
