@@ -19,9 +19,9 @@ function init() {
     // SE LISTAN TODOS LOS PRODUCTOS
     listarProductos();
 }
-
+/*
 // FUNCIÓN CALLBACK AL CARGAR LA PÁGINA O AL AGREGAR UN PRODUCTO
-function listarProductos() {
+    function listarProductos(){
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
     var client = getXMLHttpRequest();
     client.open('GET', './backend/product-list.php', true);
@@ -79,7 +79,7 @@ function buscarProducto(e) {
      * http://qbit.com.mx/blog/2013/01/07/la-diferencia-entre-return-false-preventdefault-y-stoppropagation-en-jquery/#:~:text=PreventDefault()%20se%20utiliza%20para,escuche%20a%20trav%C3%A9s%20del%20DOM
      * https://www.geeksforgeeks.org/when-to-use-preventdefault-vs-return-false-in-javascript/
      */
-    e.preventDefault();
+/*    e.preventDefault();
 
     // SE OBTIENE EL ID A BUSCAR
     var search = document.getElementById('search').value;
@@ -164,7 +164,7 @@ function agregarProducto(e) {
  */
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
-    var client = getXMLHttpRequest();
+/*    var client = getXMLHttpRequest();
     client.open('POST', './backend/product-add.php', true);
     client.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
     client.onreadystatechange = function () {
@@ -239,7 +239,7 @@ function getXMLHttpRequest() {
          * NOTA: Las siguientes formas de crear el objeto ya son obsoletas
          *       pero se comparten por motivos historico-académicos.
          */
-        try{
+/*        try{
             // IE7 y IE8
             objetoAjax = new ActiveXObject("Msxml2.XMLHTTP");
         }catch(err2){
@@ -252,4 +252,41 @@ function getXMLHttpRequest() {
         }
     }
     return objetoAjax;
-}
+}*/
+//
+$(document.ready(function(){
+
+    $('#product-result').hide();
+    
+    $('#search').keyup(function(e){
+        if ($('#search').val()){
+            let search = $('#search').val();
+            $.ajax({
+                url: 'product-search.php',
+                type: 'GET',
+                data: {search},
+                succes: function(response){
+                    let producto = JSON.parse(response);
+                    let template = '';
+
+                    producto.forEach(producto =>{
+                        template += `
+                            <tr productId="${producto.id}">
+                                <td>${producto.id}</td>
+                                <td>${producto.nombre}</td>
+                                <td><ul>${descripcion}</ul></td>
+                                <td>
+                                <button class="product-delete btn btn-danger" onclick="eliminarProducto()">
+                                    Eliminar
+                                </button>
+                                </td>
+                            </tr>`
+                    });
+
+                    $('#container').html(template);
+                    $('#product-result').show();
+                }
+            })
+        }
+    })
+}))
