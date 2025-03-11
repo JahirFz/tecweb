@@ -147,6 +147,7 @@ $(document).ready(function(){
             // SE REINICIA EL FORMULARIO
             $('#name').val('');
             $('#description').val(JsonString);
+            $('button.btn-primary').text("Agregar Producto");
             // SE HACE VISIBLE LA BARRA DE ESTADO
             $('#product-result').show();
             // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
@@ -179,21 +180,17 @@ $(document).ready(function(){
             $('#name').val(product.nombre);
             // EL ID SE INSERTA EN UN CAMPO OCULTO PARA USARLO DESPUÉS PARA LA ACTUALIZACIÓN
             $('#productId').val(product.id);
-            // SE ELIMINA nombre, eliminado E id PARA PODER MOSTRAR EL JSON EN EL <textarea>
-            delete(product.nombre);
-            delete(product.eliminado);
-            delete(product.id);
-            // SE CONVIERTE EL OBJETO JSON EN STRING
-            let JsonString = JSON.stringify(product,null,2);
-            // SE MUESTRA STRING EN EL <textarea>
-            $('#description').val(JsonString);
+            $('#price').val(product.precio);
+            $('#units').val(product.unidades);
+            $('#model').val(product.modelo);
+            $('#brand').val(product.marca);
+            $('#details').val(product.detalles);
 
             $('button.btn-primary').text("Modificar Producto");
             
             // SE PONE LA BANDERA DE EDICIÓN EN true
             edit = true;
         });
-        e.preventDefault();
     });    
     
 });
