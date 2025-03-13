@@ -118,19 +118,117 @@ $(document).ready(function(){
         }
     });
 
+    // Validación en tiempo real al perder el foco de cada campo
+    $('#name').blur(function() {
+        let name = $(this).val();
+        if (name.trim() === '' || name.length > 100) {
+            alert('El nombre es requerido y debe tener 100 caracteres o menos.');
+        }
+    });
+
+    $('#marca').blur(function() {
+        let marca = $(this).val();
+        if (marca.trim() === '' || !marcasValidas.includes(marca)) {
+            alert('La marca es requerida');
+        }
+    });
+
+    $('#modelo').blur(function() {
+        let modelo = $(this).val();
+        const regexModelo = /^[a-zA-Z0-9\-]+$/; 
+        if (modelo.trim() === '' || modelo.length > 25 || !regexModelo.test(modelo)) {
+            alert('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.');
+        }
+    });
+
+    $('#precio').blur(function() {
+        let precio = $(this).val();
+        if (precio === '' || parseFloat(precio) <= 99.99) {
+            alert('El precio es requerido y debe ser mayor a 99.99.');
+        }
+    });
+
+    $('#detalles').blur(function() {
+        let detalles = $(this).val();
+        if (detalles.length > 250) {
+            alert('Los detalles deben tener 250 caracteres o menos.');
+        }
+    });
+
+    $('#unidades').blur(function() {
+        let unidades = $(this).val();
+        if (unidades === '' || parseInt(unidades) < 0) {
+            alert('Las unidades son requeridas y deben ser 0 o mayores.');
+        }
+    });
+
+    $('#imagen').blur(function() {
+        let imagen = $(this).val();
+        if (imagen === '') {
+            $(this).val('img/default.png');  
+        }
+    });
+
     $('#product-form').submit(e => {
         e.preventDefault();
 
-        // SE CONVIERTE EL JSON DE STRING A OBJETO
-        let postData = JSON.parse( $('#description').val() );
-        // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
-        postData['nombre'] = $('#name').val();
-        postData['id'] = $('#productId').val();
+        // Obtener valores de los campos
+        let name = $('#name').val().trim();
+        let marca = $('#marca').val().trim();
+        let modelo = $('#modelo').val().trim();
+        let precio = $('#precio').val();
+        let detalles = $('#detalles').val();
+        let unidades = $('#unidades').val();
+        let imagen = $('#imagen').val().trim();
 
-        /**
-         * AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
-         * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
-         **/
+        // Validación de todos los campos
+        if (name === '' || name.length > 100) {
+            alert('El nombre es requerido y debe tener 100 caracteres o menos.');
+            return;
+        }
+
+        const marcasValidas = ['Marca1', 'Marca2', 'Marca3'];
+        if (marca === '') {
+            alert('La marca es requerida.');
+            return;
+        }
+
+        const regexModelo = /^[a-zA-Z0-9\-]+$/;
+        if (modelo === '' || modelo.length > 25 || !regexModelo.test(modelo)) {
+            alert('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.');
+            return;
+        }
+
+        if (precio === '' || parseFloat(precio) <= 99.99) {
+            alert('El precio es requerido y debe ser mayor a 99.99.');
+            return;
+        }
+
+        if (detalles.length > 250) {
+            alert('Los detalles deben tener 250 caracteres o menos.');
+            return;
+        }
+
+        if (unidades === '' || parseInt(unidades) < 0) {
+            alert('Las unidades son requeridas y deben ser 0 o mayores.');
+            return;
+        }
+
+        if (imagen === '') {
+            $('#imagen').val('img/default.png');
+        }
+
+        // SE 
+        let postData = {
+            nombre: name,
+            precio: precio,
+            unidades: unidades,
+            modelo: modelo,
+            marca: marca,
+            detalles: detalles,
+            imagen: imagen,
+            id: $('#productId').val()
+        };
 
         const url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
         
@@ -146,16 +244,19 @@ $(document).ready(function(){
                     `;
             // SE REINICIA EL FORMULARIO
             $('#name').val('');
-            $('#description').val(JsonString);
-            $('button.btn-primary').text("Agregar Producto");
-            // SE HACE VISIBLE LA BARRA DE ESTADO
+            $('#precio').val('');
+            $('#unidades').val('');
+            $('#modelo').val('');
+            $('#marca').val('');
+            $('#detalles').val('');
+            $('#imagen').val('');
             $('#product-result').show();
-            // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
             $('#container').html(template_bar);
-            // SE LISTAN TODOS LOS PRODUCTOS
             listarProductos();
             // SE REGRESA LA BANDERA DE EDICIÓN A false
             edit = false;
+            // CAMBIAR TEXTO A "AGREGAR PRODUCTO"
+            $('button.btn-primary').text("Agregar Producto");
         });
     });
 
@@ -178,19 +279,19 @@ $(document).ready(function(){
             let product = JSON.parse(response);
             // SE INSERTAN LOS DATOS ESPECIALES EN LOS CAMPOS CORRESPONDIENTES
             $('#name').val(product.nombre);
-            // EL ID SE INSERTA EN UN CAMPO OCULTO PARA USARLO DESPUÉS PARA LA ACTUALIZACIÓN
+            $('#precio').val(product.precio);
+            $('#unidades').val(product.unidades);
+            $('#modelo').val(product.modelo);
+            $('#marca').val(product.marca);
+            $('#detalles').val(product.detalles);
+            $('#imagen').val(product.imagen);
             $('#productId').val(product.id);
-            $('#price').val(product.precio);
-            $('#units').val(product.unidades);
-            $('#model').val(product.modelo);
-            $('#brand').val(product.marca);
-            $('#details').val(product.detalles);
-
-            $('button.btn-primary').text("Modificar Producto");
             
             // SE PONE LA BANDERA DE EDICIÓN EN true
             edit = true;
+            // CAMBIAR TEXTO A "MODIFICAR PRODUCTO"
+            $('button.btn-primary').text("Modificar Producto");
         });
+        e.preventDefault();
     });    
-    
 });
