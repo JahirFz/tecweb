@@ -147,8 +147,8 @@ $(document).ready(function(){
     $('#modelo').blur(function() {
         let modelo = $(this).val();
         const regexModelo = /^[a-zA-Z0-9\-]+$/;
-        if (modelo.trim() === '' || modelo.length > 25 || !regexModelo.test(modelo)) {
-            estadoBarra('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.', false, 'modelo');
+        if (modelo.trim() === '') {
+            estadoBarra('El modelo es requerido.', false, 'modelo');
         } else {
             estadoBarra('Modelo válido.', true, 'modelo');
         }
@@ -259,19 +259,6 @@ $(document).ready(function(){
             estadoBarra('Imagen válida.', true, 'imagen');
         }
 
-
-        // SE 
-        let postData = {
-            nombre: name,
-            precio: precio,
-            unidades: unidades,
-            modelo: modelo,
-            marca: marca,
-            detalles: detalles,
-            imagen: imagen,
-            id: $('#productId').val()
-        };
-
         if(allValid){
             let postData = {
                 nombre: name,
@@ -350,11 +337,11 @@ $(document).ready(function(){
         // Verificar que el nombre no esté vacío antes de hacer la consulta al servidor
         if (name !== '') {
             $.ajax({
-                url: './backend/product-name.php',  // La URL para la validación del nombre
+                url: './backend/product-name.php', 
                 type: 'GET',
-                data: { name: name },  // Pasar el nombre del producto al backend
+                data: { name: name }, 
                 success: function(response) {
-                    // Asumimos que el servidor responde con un JSON con el campo "exists" que indica si el nombre ya existe
+                    
                     const data = JSON.parse(response);
                     console.log(data);
                     if (data.status === 'error') {
