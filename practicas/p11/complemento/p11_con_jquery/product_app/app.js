@@ -119,53 +119,75 @@ $(document).ready(function(){
     });
 
     // Validación en tiempo real al perder el foco de cada campo
+    function estadoBarra(mensaje, validacion, atributo) {
+        let estado = validacion ? 'text-success' : 'text-danger';
+        let mensajeEstado = `<li class="${estado}">${mensaje}</li>`;
+        $(`#status-${atributo}`).html(mensajeEstado); 
+    }
+
+    // Validación en tiempo real al perder el foco de cada campo
     $('#name').blur(function() {
         let name = $(this).val();
         if (name.trim() === '' || name.length > 100) {
-            alert('El nombre es requerido y debe tener 100 caracteres o menos.');
+            estadoBarra('El nombre es requerido y debe tener 100 caracteres o menos.', false, 'name');
+        } else {
+            estadoBarra('Nombre válido.', true, 'name');
         }
     });
 
     $('#marca').blur(function() {
         let marca = $(this).val();
-        if (marca.trim() === '' || !marcasValidas.includes(marca)) {
-            alert('La marca es requerida');
+        if (marca.trim() === '') {
+            estadoBarra('La marca es requerida y debe seleccionarse de la lista de opciones.', false, 'marca');
+        } else {
+            estadoBarra('Marca válida.', true, 'marca');
         }
     });
 
     $('#modelo').blur(function() {
         let modelo = $(this).val();
-        const regexModelo = /^[a-zA-Z0-9\-]+$/; 
+        const regexModelo = /^[a-zA-Z0-9\-]+$/;
         if (modelo.trim() === '' || modelo.length > 25 || !regexModelo.test(modelo)) {
-            alert('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.');
+            estadoBarra('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.', false, 'modelo');
+        } else {
+            estadoBarra('Modelo válido.', true, 'modelo');
         }
     });
 
     $('#precio').blur(function() {
         let precio = $(this).val();
         if (precio === '' || parseFloat(precio) <= 99.99) {
-            alert('El precio es requerido y debe ser mayor a 99.99.');
+            estadoBarra('El precio es requerido y debe ser mayor a 99.99.', false, 'precio');
+        } else {
+            estadoBarra('Precio válido.', true, 'precio');
         }
     });
 
     $('#detalles').blur(function() {
         let detalles = $(this).val();
         if (detalles.length > 250) {
-            alert('Los detalles deben tener 250 caracteres o menos.');
+            estadoBarra('Los detalles deben tener 250 caracteres o menos.', false, 'detalles');
+        } else {
+            estadoBarra('Detalles válidos.', true, 'detalles');
         }
     });
 
     $('#unidades').blur(function() {
         let unidades = $(this).val();
         if (unidades === '' || parseInt(unidades) < 0) {
-            alert('Las unidades son requeridas y deben ser 0 o mayores.');
+            estadoBarra('Las unidades son requeridas y deben ser 0 o mayores.', false, 'unidades');
+        } else {
+            estadoBarra('Unidades válidas.', true, 'unidades');
         }
     });
 
     $('#imagen').blur(function() {
         let imagen = $(this).val();
         if (imagen === '') {
-            $(this).val('img/default.png');  
+            $(this).val('img/default.png'); 
+            estadoBarra('Imagen no proporcionada, se usa una predeterminada.', true, 'imagen');
+        } else {
+            estadoBarra('Imagen válida.', true, 'imagen');
         }
     });
 
@@ -181,42 +203,62 @@ $(document).ready(function(){
         let unidades = $('#unidades').val();
         let imagen = $('#imagen').val().trim();
 
+        let allValid = true;
+
+        // Barra de estado general
+        let generalStatus = '';
+        
         // Validación de todos los campos
         if (name === '' || name.length > 100) {
-            alert('El nombre es requerido y debe tener 100 caracteres o menos.');
-            return;
+            estadoBarra('El nombre es requerido y debe tener 100 caracteres o menos.', false, 'name');
+            allValid = false;
+        } else {
+            estadoBarra('Nombre válido.', true, 'name');
         }
 
-        const marcasValidas = ['Marca1', 'Marca2', 'Marca3'];
-        if (marca === '') {
-            alert('La marca es requerida.');
-            return;
+        if (marca === '' ) {
+            estadoBarra('La marca es requerida ', false, 'marca');
+            allValid = false;
+        } else {
+            estadoBarra('Marca válida.', true, 'marca');
         }
 
         const regexModelo = /^[a-zA-Z0-9\-]+$/;
         if (modelo === '' || modelo.length > 25 || !regexModelo.test(modelo)) {
-            alert('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.');
-            return;
+            estadoBarra('El modelo es requerido, debe ser alfanumérico y tener 25 caracteres o menos.', false, 'modelo');
+            allValid = false;
+        } else {
+            estadoBarra('Modelo válido.', true, 'modelo');
         }
 
         if (precio === '' || parseFloat(precio) <= 99.99) {
-            alert('El precio es requerido y debe ser mayor a 99.99.');
-            return;
+            estadoBarra('El precio es requerido y debe ser mayor a 99.99.', false, 'precio');
+            allValid = false;
+        } else {
+            estadoBarra('Precio válido.', true, 'precio');
         }
 
         if (detalles.length > 250) {
-            alert('Los detalles deben tener 250 caracteres o menos.');
-            return;
+            estadoBarra('Los detalles deben tener 250 caracteres o menos.', false, 'detalles');
+            allValid = false;
+        } else {
+            estadoBarra('Detalles válidos.', true, 'detalles');
         }
 
         if (unidades === '' || parseInt(unidades) < 0) {
-            alert('Las unidades son requeridas y deben ser 0 o mayores.');
-            return;
+            estadoBarra('Las unidades son requeridas y deben ser 0 o mayores.', false, 'unidades');
+            allValid = false;
+        } else {
+            estadoBarra('Unidades válidas.', true, 'unidades');
         }
 
         if (imagen === '') {
             $('#imagen').val('img/default.png');
+            estadoBarra('Imagen no proporcionada, se usa una predeterminada.', true, 'imagen');
+        } else {
+            estadoBarra('Imagen válida.', true, 'imagen');
         }
+
 
         // SE 
         let postData = {
@@ -230,34 +272,40 @@ $(document).ready(function(){
             id: $('#productId').val()
         };
 
-        const url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
-        
-        $.post(url, postData, (response) => {
-            //console.log(response);
-            // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-            let respuesta = JSON.parse(response);
-            // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
-            let template_bar = '';
-            template_bar += `
-                        <li style="list-style: none;">status: ${respuesta.status}</li>
-                        <li style="list-style: none;">message: ${respuesta.message}</li>
-                    `;
-            // SE REINICIA EL FORMULARIO
-            $('#name').val('');
-            $('#precio').val('');
-            $('#unidades').val('');
-            $('#modelo').val('');
-            $('#marca').val('');
-            $('#detalles').val('');
-            $('#imagen').val('');
-            $('#product-result').show();
-            $('#container').html(template_bar);
-            listarProductos();
-            // SE REGRESA LA BANDERA DE EDICIÓN A false
-            edit = false;
-            // CAMBIAR TEXTO A "AGREGAR PRODUCTO"
-            $('button.btn-primary').text("Agregar Producto");
-        });
+        if(allValid){
+            let postData = {
+                nombre: name,
+                precio: precio,
+                unidades: unidades,
+                modelo: modelo,
+                marca: marca,
+                detalles: detalles,
+                imagen: imagen,
+                id: $('#productId').val()
+            };
+
+            const url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
+
+            $.post(url, postData, (response) => {
+                let respuesta = JSON.parse(response);
+                let template_bar = `
+                    <li style="list-style: none;">status: ${respuesta.status}</li>
+                    <li style="list-style: none;">message: ${respuesta.message}</li>
+                `;
+                $('#name').val('');
+                $('#precio').val('');
+                $('#unidades').val('');
+                $('#modelo').val('');
+                $('#marca').val('');
+                $('#detalles').val('');
+                $('#imagen').val('');
+                $('#product-result').show();
+                $('#container').html(template_bar);
+                listarProductos();
+                edit = false;
+                $('button.btn-primary').text("Agregar Producto");
+            });
+        }
     });
 
     $(document).on('click', '.product-delete', (e) => {
