@@ -342,4 +342,32 @@ $(document).ready(function(){
         });
         e.preventDefault();
     });    
+
+     // Evento 'keyup' para la validación asincrónica del nombre
+     $('#name').keyup(function() {
+        let name = $(this).val().trim();
+
+        // Verificar que el nombre no esté vacío antes de hacer la consulta al servidor
+        if (name !== '') {
+            $.ajax({
+                url: './backend/product-name.php',  // La URL para la validación del nombre
+                type: 'GET',
+                data: { name: name },  // Pasar el nombre del producto al backend
+                success: function(response) {
+                    // Asumimos que el servidor responde con un JSON con el campo "exists" que indica si el nombre ya existe
+                    const data = JSON.parse(response);
+                    console.log(data);
+                    if (data.status === 'error') {
+                        estadoBarra(data.message, false, 'name'); 
+                    } else if (data.status === 'success') {
+                        estadoBarra(data.message, true, 'name');   
+                    }
+                },
+                error: function() {
+                    estadoBarra('Error al validar el nombre.', false, 'name');
+                }
+            });
+        }
+    });
 });
+
