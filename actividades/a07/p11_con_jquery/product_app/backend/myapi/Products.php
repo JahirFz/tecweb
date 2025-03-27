@@ -28,26 +28,68 @@ class Products extends DataBase {
         $this->conexion->close();
     }
 
-    // Buscar un producto por nombre
-    public function singleByName($name) {
-        $this->response = array();
+}
+?>
 
-        $stmt = $this->conexion->prepare("SELECT * FROM productos WHERE nombre = ? AND eliminado = 0");
-        $stmt->bind_param("s", $name);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            $this->response = $result->fetch_all(MYSQLI_ASSOC);
-        }
+<?php
+namespace TECWEB\MYAPI;
+use TECWEB\MYAPI\DataBase as DataBase;
 
-        $stmt->close();
-        $this->conexion->close();
+require_once __DIR__ . '/DataBase.php';
+
+class Products extends DataBase {
+    private $response;
+
+    public function __construct($dbname, $user = "root", $pass = "") {
+        parent::__construct($host, $user, $pass, $dbname);
+        $this->response = [];
     }
 
-    // Convertir el array response a JSON
+    public function list() {
+        $sql = "SELECT * FROM productos WHERE eliminado=0";
+        $res = $this->conexion->query($sql);
+        $this->response = $res->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function add($nombre, $precio, $existencia) {
+        $nombre = $this->conexion->real_escape_string($nombre);
+        $sql = "INSERT INTO productos (nombre, precio, existencia) VALUES ('$nombre', $precio, $existencia)";
+        $this->response = ["success" => $this->conexion->query($sql)];
+    }
+
+    public function delete($id) {
+        $sql = "DELETE FROM productos WHERE id = $id";
+        $this->response = ["success" => $this->conexion->query($sql)];
+    }
+
+    public function edit($id, $nombre, $precio, $existencia) {
+        $nombre = $this->conexion->real_escape_string($nombre);
+        $sql = "UPDATE productos SET nombre = '$nombre', precio = $precio, existencia = $existencia WHERE id = $id";
+        $this->response = ["success" => $this->conexion->query($sql)];
+    }
+
+    public function single($id) {
+        $sql = "SELECT * FROM productos WHERE id = $id";
+        $res = $this->conexion->query($sql);
+        $this->response = $res->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function singleByName($name) {
+        $name = $this->conexion->real_escape_string($name);
+        $sql = "SELECT * FROM productos WHERE nombre = '$name'";
+        $res = $this->conexion->query($sql);
+        $this->response = $res->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function search($cadena) {
+        $cadena = $this->conexion->real_escape_string($cadena);
+        $sql = "SELECT * FROM productos WHERE nombre LIKE '%$cadena%'";
+        $res = $this->conexion->query($sql);
+        $this->response = $res->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getData() {
-        return json_encode($this->response, JSON_PRETTY_PRINT);
+        return json_encode($this->response);
     }
 }
 ?>
