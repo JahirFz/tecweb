@@ -1,7 +1,7 @@
 <?php
-namespace TECWEB\MYAPI;
+namespace TECWEB\MODELO;
 
-use TECWEB\MYAPI\DataBase as DataBase;
+use TECWEB\MODELO\DataBase as DataBase;
 
 require_once __DIR__ . '/DataBase.php';
 
