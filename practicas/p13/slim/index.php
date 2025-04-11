@@ -25,5 +25,14 @@ $app->post("/pruebapost", function($request, $response, $args){
     return $response;
 });
 
+$app->get("/testjson", function($request, $response, $args){
+    $data[0]["nombre"]="Sergio";
+    $data[1]["apellidos"]="Rojas Espino";
+    $data[2]["nombre"]="Pedro";
+    $data[3]["nombre"]="Perez Lopez";
+    $response->getBody()->write(json_encode($data, JSON_PRETTY_PRINT));
+    return $response;
+});
+
 $app->run();
 ?>
