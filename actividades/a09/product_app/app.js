@@ -18,7 +18,7 @@ $(document).ready(function(){
 
     function listarProductos() {
         $.ajax({
-            url: 'http://localhost/tecweb/actividades/a09/product_app/backend/productos',
+            url: `http://localhost/tecweb/actividades/a09/product_app/backend/products`,
             type: 'GET',
             success: function(response) {
                 console.log(response);
@@ -63,8 +63,7 @@ $(document).ready(function(){
         if($('#search').val()) {
             let search = $('#search').val();
             $.ajax({
-                url: './Nature/Read/product-search.php?search='+$('#search').val(),
-                data: {search},
+                url: `http://localhost/tecweb/actividades/a09/product_app/backend/products/` + encodeURIComponent(search),
                 type: 'GET',
                 success: function (response) {
                     if(!response.error) {
@@ -100,7 +99,7 @@ $(document).ready(function(){
                                 `;
 
                                 template_bar += `
-                                    <li>${producto.nombre}</il>
+                                    <li>${producto.nombre}</li>
                                 `;
                             });
                             // SE HACE VISIBLE LA BARRA DE ESTADO
@@ -121,77 +120,76 @@ $(document).ready(function(){
 
     $('#product-form').submit(e => {
         e.preventDefault();
-
-        // SE CONVIERTE EL JSON DE STRING A OBJETO
-        let postData = JSON.parse( $('#description').val() );
-        // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
+    
+        let postData = JSON.parse($('#description').val());
         postData['nombre'] = $('#name').val();
         postData['id'] = $('#productId').val();
+    
+        const url = 'http://localhost/tecweb/actividades/a09/product_app/backend/product';
+        console.log('edit es:', edit);
 
-        /**
-         * AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
-         * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
-         **/
-
-        const url = edit === false ? './Nature/Create/product-add.php' : './Nature/Update/product-edit.php';
-        
-        $.post(url, postData, (response) => {
-            console.log(response);
-            // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-            let respuesta = JSON.parse(response);
-            // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
-            let template_bar = '';
-            template_bar += `
-                        <li style="list-style: none;">status: ${respuesta.status}</li>
-                        <li style="list-style: none;">message: ${respuesta.message}</li>
-                    `;
-            // SE REINICIA EL FORMULARIO
-            $('#name').val('');
-            $('#description').val(JsonString);
-            // SE HACE VISIBLE LA BARRA DE ESTADO
-            $('#product-result').show();
-            // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
-            $('#container').html(template_bar);
-            // SE LISTAN TODOS LOS PRODUCTOS
-            listarProductos();
-            // SE REGRESA LA BANDERA DE EDICIÓN A false
-            edit = false;
+        $.ajax({
+            url: url,
+            type: edit ? 'PUT' : 'POST',
+            data: JSON.stringify(postData),
+            contentType: 'application/json',
+            success: function(response){
+                console.log(response);
+                let respuesta = JSON.parse(response);
+                let template_bar = `
+                    <li style="list-style: none;">status: ${respuesta.status}</li>
+                    <li style="list-style: none;">message: ${respuesta.message}</li>
+                `;
+                $('#name').val('');
+                $('#description').val('');
+                $('#product-result').show();
+                $('#container').html(template_bar);
+                listarProductos();
+                edit = false;
+            }
         });
     });
+    
+    
+    
 
-    $(document).on('click', '.product-delete', (e) => {
-        if(confirm('¿Realmente deseas eliminar el producto?')) {
-            const element = $(this)[0].activeElement.parentElement.parentElement;
-            const id = $(element).attr('productId');
-            $.post('./Nature/Delete/product-delete.php', {id}, (response) => {
-                $('#product-result').hide();
-                listarProductos();
+    $(document).on('click', '.product-delete', function () {
+        if (confirm('¿Realmente deseas eliminar el producto?')) {
+            const row = $(this).closest('tr');
+            const id = row.attr('productId');
+    
+            $.ajax({
+                url: `http://localhost/tecweb/actividades/a09/product_app/backend/productos/${id}`,
+                type: 'DELETE',
+                success: function(response){
+                    $('#product-result').hide();
+                    listarProductos();
+                }
             });
         }
     });
+    
 
-    $(document).on('click', '.product-item', (e) => {
-        const element = $(this)[0].activeElement.parentElement.parentElement;
-        const id = $(element).attr('productId');
-        $.post('./Nature/Read/product-single.php', {id}, (response) => {
-            // SE CONVIERTE A OBJETO EL JSON OBTENIDO
+    $(document).on('click', '.product-item', function(e) {
+        e.preventDefault();
+    
+        const row = $(this).closest('tr');
+        const id = row.attr('productId');
+    
+        $.get(`http://localhost/tecweb/actividades/a09/product_app/backend/productos/${id}`, { name: id }, (response) => {
             let product = JSON.parse(response);
-            // SE INSERTAN LOS DATOS ESPECIALES EN LOS CAMPOS CORRESPONDIENTES
+    
             $('#name').val(product.nombre);
-            // EL ID SE INSERTA EN UN CAMPO OCULTO PARA USARLO DESPUÉS PARA LA ACTUALIZACIÓN
             $('#productId').val(product.id);
-            // SE ELIMINA nombre, eliminado E id PARA PODER MOSTRAR EL JSON EN EL <textarea>
-            delete(product.nombre);
-            delete(product.eliminado);
-            delete(product.id);
-            // SE CONVIERTE EL OBJETO JSON EN STRING
-            let JsonString = JSON.stringify(product,null,2);
-            // SE MUESTRA STRING EN EL <textarea>
+    
+            delete product.nombre;
+            delete product.eliminado;
+            delete product.id;
+    
+            let JsonString = JSON.stringify(product, null, 2);
             $('#description').val(JsonString);
-            
-            // SE PONE LA BANDERA DE EDICIÓN EN true
+    
             edit = true;
         });
-        e.preventDefault();
     });    
 });

@@ -14,9 +14,10 @@ $app->addRoutingMiddleware();
 $app->setBasePath('/tecweb/actividades/a09/product_app/backend');
 
 //CREATE
-$app->post('/productos', function($request, $response, $args){
-    $data = $request->getParsedBody();
+$app->post('/product', function($request, $response, $args){
     $products = new Create("marketzone");
+    $input = $request->getBody()->getContents();
+    $data = json_decode($input, true);
     $producto = (object)$data;
     $products->add($producto);
     $response->getBody()->write(json_encode($products->getData()));
@@ -27,37 +28,40 @@ $app->post('/productos', function($request, $response, $args){
 $app->delete('/productos/{id}', function($request, $response, $args){
     $products = new Delete("marketzone");
     $id = $args['id'];
+    $products->delete($id);
     $response->getBody()->write(json_encode($products->getData()));
     return $response->withHeader('Content-Type', 'application/json');
 });
 
+
 //READ
-$app->get('/productos', function ($request, $response, $args){
+$app->get('/products', function ($request, $response, $args){
     $products = new Read("marketzone");
     $products->list();
     $response->getBody()->write(json_encode($products->getData()));
     return $response->withHeader('Content-Type', 'application/json');
 });
 
-$app->get('/productos/{search}', function($request, $response, $args){
-    $products = new Read("marketzonw");
+$app->get('/products/{search}', function($request, $response, $args){
+    $products = new Read("marketzone");
     $search = $args['search'] ?? '';
     $products->search($search);
     $response->getBody()->write(json_encode($products->getData()));
     return $response->withHeader('Content-Type', 'application/json');
 });
 
-$app->get('/search-name', function($request, $response, $args){
+$app->get('/productos/{id}', function($request, $response, $args){
     $products = new Read("marketzone");
     $par = $request->getQueryParams();
-    $name = $par['name'] ?? '';
-    $products->single($name);
+    $id = isset($par['name']) ? intval($par['name']) : 0;
+    $products->single($id);
     $response->getBody()->write(json_encode($products->getData()));
     return $response->withHeader('Content-Type', 'application/json');
 });
 
+
 //UPDATE
-$app->put('/producto', function($request, $response, $args){
+$app->put('/product', function($request, $response, $args){
     $products = new Update("marketzone");
     $input = $request->getBody()->getContents();
     $data = json_decode($input, true);
