@@ -18,7 +18,7 @@ $(document).ready(function(){
 
     function listarProductos() {
         $.ajax({
-            url: './Nature/Read/product-list.php',
+            url: 'http://localhost/tecweb/actividades/a09/product_app/backend/productos',
             type: 'GET',
             success: function(response) {
                 console.log(response);

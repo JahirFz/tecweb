@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4f2e021da92920571fa9e45e882038f7
+class ComposerStaticInit4268c6c90c820f0ea287f151c5956a04
 {
     public static $files = array (
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
@@ -13,6 +13,10 @@ class ComposerStaticInit4f2e021da92920571fa9e45e882038f7
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'TECWEB\\MYAPI\\' => 13,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -39,6 +43,10 @@ class ComposerStaticInit4f2e021da92920571fa9e45e882038f7
     );
 
     public static $prefixDirsPsr4 = array (
+        'TECWEB\\MYAPI\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/myapi',
+        ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
@@ -99,9 +107,9 @@ class ComposerStaticInit4f2e021da92920571fa9e45e882038f7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4f2e021da92920571fa9e45e882038f7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4f2e021da92920571fa9e45e882038f7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4f2e021da92920571fa9e45e882038f7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4268c6c90c820f0ea287f151c5956a04::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4268c6c90c820f0ea287f151c5956a04::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4268c6c90c820f0ea287f151c5956a04::$classMap;
 
         }, null, ClassLoader::class);
     }
